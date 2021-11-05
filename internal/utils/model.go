@@ -2,7 +2,7 @@ package utils
 
 import "github.com/gorilla/websocket"
 
-var ConnSlice []*websocket.Conn
+var ConnSlice []*websocket.Conn = make([]*websocket.Conn, 0)
 var GetChannelMessage []byte
 var UserStatuses map[string][]byte = make(map[string][]byte, 0)
 

@@ -25,6 +25,6 @@ func SocketHandler() func(c *gin.Context) {
 				conn.Close()
 			}
 		}
-		utils.ConnSlice[len(utils.ConnSlice)] = conn
+		utils.ConnSlice = append(utils.ConnSlice, conn)
 	}
 }
