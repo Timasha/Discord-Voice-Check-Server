@@ -46,7 +46,7 @@ func RecieveMsg(conn **websocket.Conn, flags utils.Config) {
 				json.Unmarshal(msg, &voiceStateMsgStruct)
 				delete(utils.UserStatuses, voiceStateMsgStruct.UserData.Nick)
 			}
-			go Broadcast(msg)
+			go Broadcast(msg, utils.ConnSlice)
 		}
 	}
 }
