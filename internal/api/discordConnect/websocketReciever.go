@@ -17,25 +17,14 @@ func RecieveMsg(conn **websocket.Conn, flags utils.Config) {
 	for {
 		msgType, msg, readErr := (*conn).ReadMessage()
 		if msgType == websocket.CloseAbnormalClosure || msgType == websocket.CloseMessage || msgType == websocket.CloseNormalClosure || msgType == -1 {
-			for i := 0; i < len(utils.ConnSlice); i++ {
-				if &utils.ConnSlice[i] == conn {
-					utils.ConnSlice = append(utils.ConnSlice[:i], utils.ConnSlice[i+1:]...)
-					(*conn).Close()
-					return
-				}
-			}
-			log.Println("User disconnected")
+			(*conn).Close()
+			log.Println("Streamkit disconnected")
+			return
 		}
 		if readErr != nil {
-			log.Printf("Read websocket message error: %v", readErr)
-			for i := 0; i < len(utils.ConnSlice); i++ {
-				if &utils.ConnSlice[i] == conn {
-					utils.ConnSlice = append(utils.ConnSlice[:i], utils.ConnSlice[i+1:]...)
-					(*conn).Close()
-					return
-				}
-			}
-			log.Printf("Read websocket message error: %v. Disconnecting user.", readErr)
+			(*conn).Close()
+			log.Printf("Read websocket streamkit message error: %v.", readErr)
+			return
 		}
 		json.Unmarshal(msg, &msgStruct)
 		if msgStruct.Evt == "READY" {
