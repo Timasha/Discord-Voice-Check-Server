@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"discordMsgRead/internal/utils"
-	"encoding/json"
 	"log"
 	"net/http"
 
@@ -21,11 +20,7 @@ func SocketHandler() func(c *gin.Context) {
 		}
 		conn.WriteMessage(websocket.TextMessage, utils.GetChannelMessage)
 		for _, value := range utils.UserStatuses {
-			data, marshErr := json.Marshal(value)
-			if marshErr != nil {
-				log.Printf("Marshal user status error: %v", marshErr)
-			}
-			writeErr := conn.WriteMessage(websocket.TextMessage, data)
+			writeErr := conn.WriteMessage(websocket.TextMessage, value)
 			if writeErr != nil {
 				conn.Close()
 			}
