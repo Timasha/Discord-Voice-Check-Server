@@ -1,6 +1,10 @@
 package utils
 
-import "github.com/gorilla/websocket"
+import (
+	"sync"
+
+	"github.com/gorilla/websocket"
+)
 
 var ConnSlice []*websocket.Conn = make([]*websocket.Conn, 0)
 var GetChannelMessage []byte
@@ -26,3 +30,6 @@ type Data struct {
 	Voice_state struct{} `json:"voice_state"`
 	User        struct{} `json:"user"`
 }
+
+var DeleteGroup *sync.WaitGroup
+var BroadcastGroup *sync.WaitGroup
