@@ -31,5 +31,5 @@ type Data struct {
 	User        struct{} `json:"user"`
 }
 
-var DeleteGroup *sync.WaitGroup
-var BroadcastGroup *sync.WaitGroup
+var DeleteGroup *sync.WaitGroup = &sync.WaitGroup{}
+var BroadcastGroup *sync.WaitGroup = &sync.WaitGroup{}
